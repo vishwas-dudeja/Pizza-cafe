@@ -1,0 +1,187 @@
+/* ── Root layout ── */
+.main {
+  background: #fff;
+  min-height: 100vh;
+  overflow-x: hidden; /* prevent horizontal overflow during GSAP transforms */
+}
+
+/* ── Navbar ── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  mix-blend-mode: difference; /* Inverts over dark/light backgrounds automatically */
+}
+
+.logo {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.navLinks {
+  list-style: none;
+  display: flex;
+  gap: 36px;
+}
+
+.navLinks a {
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: opacity 0.2s;
+}
+
+.navLinks a:hover {
+  opacity: 0.6;
+}
+
+/* ── Content section ── */
+.contentSection {
+  background: #fff;
+  padding: 120px 48px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contentInner {
+  max-width: 700px;
+  margin-bottom: 80px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 24px;
+}
+
+.heading {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #111;
+  margin-bottom: 28px;
+}
+
+.body {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #555;
+  font-weight: 400;
+}
+
+/* ── Card grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: #fafafa;
+  cursor: pointer;
+  will-change: transform;  /* GPU layer for stagger animation */
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  border-color: #ddd;
+}
+
+.cardIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #111 0%, #444 100%);
+}
+
+.cardLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  letter-spacing: -0.01em;
+}
+
+/* ── Quote section ── */
+.quoteSection {
+  background: #111;
+  padding: 120px 48px;
+  text-align: center;
+}
+
+.quote {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 300;
+  line-height: 1.4;
+  color: #fff;
+  letter-spacing: -0.02em;
+  max-width: 700px;
+  margin: 0 auto 20px;
+  font-style: italic;
+}
+
+.cite {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.06em;
+  font-style: normal;
+}
+
+/* ── Footer ── */
+.footer {
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+  padding: 32px 48px;
+  font-size: 13px;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nav {
+    padding: 16px 24px;
+  }
+
+  .navLinks {
+    gap: 20px;
+  }
+
+  .contentSection {
+    padding: 80px 24px 60px;
+  }
+
+  .quoteSection {
+    padding: 80px 24px;
+  }
+
+  .footer {
+    padding: 24px;
+  }
+}

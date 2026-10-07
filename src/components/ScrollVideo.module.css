@@ -1,0 +1,211 @@
+/* ─── Section wrapper ─────────────────────────────────────────────────
+   GSAP ScrollTrigger pin:true owns the pinning — no height or sticky here */
+.section {
+  position: relative;
+  width: 100%;
+  background: #000;
+}
+
+/* ─── Pinned viewport ────────────────────────────────────────────────── */
+.sticky {
+  position: relative;
+  width: 100%;
+  height: 100svh;          /* svh for mobile address bar safety */
+  overflow: hidden;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Canvas (replaces <video>) ──────────────────────────────────────── */
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: opacity 0.5s ease;
+  /* Promote to GPU composite layer — no paint on drawImage() calls */
+  will-change: contents;
+  image-rendering: auto;   /* let browser interpolate for quality */
+}
+
+/* ─── Loading overlay ────────────────────────────────────────────────── */
+.loader {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: #000;
+}
+
+/* SVG ring container */
+.loaderRing {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loaderSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);  /* start arc at 12 o'clock */
+}
+
+/* Animated arc — stroke-dashoffset is driven by React state */
+.loaderArc {
+  transition: stroke-dashoffset 0.25s ease;
+}
+
+.loaderPct {
+  position: relative;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.loaderText {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* ─── Text overlay ──────────────────────────────────────────────────── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 0 64px 80px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.60) 0%,
+    rgba(0, 0, 0, 0.20) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.overlayEyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 14px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.overlayHeading {
+  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: #fff;
+  margin: 0 0 18px;
+  max-width: 680px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.overlaySub {
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 400px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* ─── Progress bar ──────────────────────────────────────────────────── */
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 20;
+}
+
+.progressFill {
+  height: 100%;
+  width: 0%;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0 1px 1px 0;
+  /* No CSS transition — driven directly via DOM ref for frame accuracy */
+}
+
+/* ─── Scroll cue ────────────────────────────────────────────────────── */
+.scrollCue {
+  position: absolute;
+  bottom: 32px;
+  right: 48px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.scrollIcon {
+  width: 22px;
+  height: 36px;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 11px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 5px;
+}
+
+.scrollDot {
+  width: 3px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 2px;
+  animation: scrollBounce 1.6s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0);    opacity: 1;    }
+  50%       { transform: translateY(9px); opacity: 0.2;  }
+}
+
+/* ─── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .overlay {
+    padding: 0 28px 56px;
+  }
+
+  .scrollCue {
+    right: 20px;
+    bottom: 24px;
+  }
+}
